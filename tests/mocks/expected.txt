@@ -1,0 +1,19 @@
+INPUT:
+1
+OUTPUT:
+O número informado foi 1.0
+
+INPUT:
+1.5
+OUTPUT:
+O número informado foi 1.5
+
+INPUT:
+-1
+OUTPUT:
+O número informado foi -1.0
+
+INPUT:
+0
+OUTPUT:
+O número informado foi 0.0
