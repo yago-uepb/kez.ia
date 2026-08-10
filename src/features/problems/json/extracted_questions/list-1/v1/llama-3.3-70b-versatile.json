@@ -1,0 +1,291 @@
+{
+  "is_exercise_list": true,
+  "reason": null,
+  "questions": [
+    {
+      "title": "Exercício 1",
+      "description": "Faça um Programa que peça um número e então mostre a mensagem: O número informado foi [número].",
+      "test_cases": [
+        {
+          "input": "10",
+          "expected_output": "O número informado foi 10"
+        },
+        {
+          "input": "20",
+          "expected_output": "O número informado foi 20"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 2",
+      "description": "Faça um Programa que peça dois números e imprima a soma.",
+      "test_cases": [
+        {
+          "input": "10, 20",
+          "expected_output": "30"
+        },
+        {
+          "input": "5, 15",
+          "expected_output": "20"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 3",
+      "description": "Faça um Programa que peça as 4 notas bimestrais e mostre a média.",
+      "test_cases": [
+        {
+          "input": "10, 20, 30, 40",
+          "expected_output": "25"
+        },
+        {
+          "input": "5, 15, 25, 35",
+          "expected_output": "20"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 4",
+      "description": "Faça um Programa que converta metros para centímetros.",
+      "test_cases": [
+        {
+          "input": "1",
+          "expected_output": "100"
+        },
+        {
+          "input": "2",
+          "expected_output": "200"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 5",
+      "description": "Faça um Programa que peça o raio de um círculo, calcule e mostre sua área.",
+      "test_cases": [
+        {
+          "input": "4",
+          "expected_output": "50.26548245743719"
+        },
+        {
+          "input": "5",
+          "expected_output": "78.53981633974483"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 6",
+      "description": "Faça um Programa que calcule a área de um quadrado, em seguida mostre o dobro desta área para o usuário.",
+      "test_cases": [
+        {
+          "input": "4",
+          "expected_output": "32"
+        },
+        {
+          "input": "5",
+          "expected_output": "50"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 7",
+      "description": "Faça um Programa que pergunte quanto você ganha por hora e o número de horas trabalhadas no mês. Calcule e mostre o total do seu salário no referido mês.",
+      "test_cases": [
+        {
+          "input": "10, 100",
+          "expected_output": "1000"
+        },
+        {
+          "input": "20, 50",
+          "expected_output": "1000"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 8",
+      "description": "Faça um Programa que peça a temperatura em graus Farenheit, transforme e mostre a temperatura em graus Celsius.",
+      "test_cases": [
+        {
+          "input": "32",
+          "expected_output": "0"
+        },
+        {
+          "input": "100",
+          "expected_output": "37.77777777777778"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 9",
+      "description": "Faça um Programa que peça a temperatura em graus Celsius, transforme e mostre em graus Farenheit.",
+      "test_cases": [
+        {
+          "input": "0",
+          "expected_output": "32"
+        },
+        {
+          "input": "37.77777777777778",
+          "expected_output": "100"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 10",
+      "description": "Elaborar um algoritmo que efetue a apresentação do valor da conversão em real (R$) de um valor lido em dólar (US$).",
+      "test_cases": [
+        {
+          "input": "1, 1",
+          "expected_output": "1"
+        },
+        {
+          "input": "2, 2",
+          "expected_output": "4"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 11",
+      "description": "Faça um algoritmo que receba um valor que foi depositado e exiba o valor com rendimento após um mês.",
+      "test_cases": [
+        {
+          "input": "1000",
+          "expected_output": "1007"
+        },
+        {
+          "input": "500",
+          "expected_output": "503.5"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 12",
+      "description": "A Loja Mamão com Açúcar está vendendo seus produtos em 5 (cinco) prestações sem juros.",
+      "test_cases": [
+        {
+          "input": "100",
+          "expected_output": "20"
+        },
+        {
+          "input": "50",
+          "expected_output": "10"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 13",
+      "description": "Faça um algoritmo que receba o preço de custo de um produto e mostre o valor de venda.",
+      "test_cases": [
+        {
+          "input": "100, 10",
+          "expected_output": "110"
+        },
+        {
+          "input": "50, 20",
+          "expected_output": "60"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 14",
+      "description": "Escrever um algoritmo para determinar o consumo médio de um automóvel sendo fornecida a distância total percorrida pelo automóvel e o total de combustível gasto.",
+      "test_cases": [
+        {
+          "input": "1000, 50",
+          "expected_output": "20"
+        },
+        {
+          "input": "500, 25",
+          "expected_output": "20"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 15",
+      "description": "Escreva um programa que leia três números inteiros e positivos (A, B, C) e calcule a seguinte expressão:",
+      "test_cases": null
+    },
+    {
+      "title": "Exercício 16",
+      "description": "Escrever um algoritmo que leia o nome de um vendedor, o seu salário fixo e o total de vendas efetuadas por ele no mês (em dinheiro).",
+      "test_cases": [
+        {
+          "input": "João, 1000, 500",
+          "expected_output": "1250"
+        },
+        {
+          "input": "Maria, 500, 200",
+          "expected_output": "600"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 17",
+      "description": "Faça um Programa que peça 2 números inteiros e um número real.",
+      "test_cases": [
+        {
+          "input": "2, 3, 4",
+          "expected_output": "2*3+4=10"
+        },
+        {
+          "input": "5, 6, 7",
+          "expected_output": "5*6+7=37"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 18",
+      "description": "Tendo como dados de entrada a altura de uma pessoa, construa um algoritmo que calcule seu peso ideal.",
+      "test_cases": [
+        {
+          "input": "1.60",
+          "expected_output": "55.24"
+        },
+        {
+          "input": "1.70",
+          "expected_output": "61.09"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 19",
+      "description": "Faça um programa que peça o tamanho de um arquivo para download (em MB) e a velocidade de um link de Internet (em MBps).",
+      "test_cases": [
+        {
+          "input": "100, 1",
+          "expected_output": "100"
+        },
+        {
+          "input": "500, 2",
+          "expected_output": "250"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 20",
+      "description": "Ler dois valores para as variáveis A e B, e efetuar as trocas dos valores de forma que a variável A passe a possuir o valor da variável B e a variável B passe a possuir o valor da variável A.",
+      "test_cases": [
+        {
+          "input": "5, 10",
+          "expected_output": "A=10, B=5"
+        },
+        {
+          "input": "20, 30",
+          "expected_output": "A=30, B=20"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 21",
+      "description": "Faça um Programa que pergunte quanto você ganha por hora e o número de horas trabalhadas no mês.",
+      "test_cases": [
+        {
+          "input": "10, 100",
+          "expected_output": "1000"
+        },
+        {
+          "input": "20, 50",
+          "expected_output": "1000"
+        }
+      ]
+    }
+  ]
+}

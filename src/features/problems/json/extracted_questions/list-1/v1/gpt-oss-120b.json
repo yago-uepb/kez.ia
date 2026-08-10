@@ -1,0 +1,198 @@
+{
+  "is_exercise_list": true,
+  "reason": null,
+  "questions": [
+    {
+      "title": "Exercício 1",
+      "description": "Faça um Programa que peça um número e então mostre a mensagem: O número informado foi [número].",
+      "test_cases": [
+        {
+          "input": "5",
+          "expected_output": "O número informado foi 5."
+        },
+        {
+          "input": "-12",
+          "expected_output": "O número informado foi -12."
+        }
+      ]
+    },
+    {
+      "title": "Exercício 2",
+      "description": "Faça um Programa que peça dois números e imprima a soma.",
+      "test_cases": [
+        {
+          "input": "3 7",
+          "expected_output": "10"
+        },
+        {
+          "input": "-2 8",
+          "expected_output": "6"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 3",
+      "description": "Faça um Programa que peça as 4 notas bimestrais e mostre a média.",
+      "test_cases": [
+        {
+          "input": "7 8 6 9",
+          "expected_output": "7.5"
+        },
+        {
+          "input": "10 10 10 10",
+          "expected_output": "10"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 4",
+      "description": "Faça um Programa que converta metros para centímetros.",
+      "test_cases": [
+        {
+          "input": "2",
+          "expected_output": "200"
+        },
+        {
+          "input": "0.75",
+          "expected_output": "75"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 5",
+      "description": "Faça um Programa que peça o raio de um círculo, calcule e mostre sua área.",
+      "test_cases": [
+        {
+          "input": "3",
+          "expected_output": "28.274333882308138"
+        },
+        {
+          "input": "0.5",
+          "expected_output": "0.7853981633974483"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 6",
+      "description": "Faça um Programa que calcule a área de um quadrado, em seguida mostre o dobro desta área para o usuário.",
+      "test_cases": [
+        {
+          "input": "4",
+          "expected_output": "32"
+        },
+        {
+          "input": "1.5",
+          "expected_output": "4.5"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 7",
+      "description": "Faça um Programa que pergunte quanto você ganha por hora e o número de horas trabalhadas no mês. Calcule e mostre o total do seu salário no referido mês.",
+      "test_cases": [
+        {
+          "input": "10 160",
+          "expected_output": "1600"
+        },
+        {
+          "input": "15.5 120",
+          "expected_output": "1860"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 8",
+      "description": "Faça um Programa que peça a temperatura em graus Farenheit, transforme e mostre a temperatura em graus Celsius. C = (5 * (F-32) / 9).",
+      "test_cases": [
+        {
+          "input": "68",
+          "expected_output": "20"
+        },
+        {
+          "input": "32",
+          "expected_output": "0"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 9",
+      "description": "Faça um Programa que peça a temperatura em graus Celsius, transforme e mostre em graus Farenheit.",
+      "test_cases": [
+        {
+          "input": "0",
+          "expected_output": "32"
+        },
+        {
+          "input": "100",
+          "expected_output": "212"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 10",
+      "description": "Elaborar um algoritmo que efetue a apresentação do valor da conversão em real (R$) de um valor lido em dólar (US$). O algoritmo deverá solicitar o valor da cotação do dólar e também a quantidade de dólares disponíveis com o usuário.",
+      "test_cases": [
+        {
+          "input": "5.0 100",
+          "expected_output": "500"
+        },
+        {
+          "input": "3.2 250",
+          "expected_output": "800"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 11",
+      "description": "Faça um algoritmo que receba um valor que foi depositado e exiba o valor com rendimento após um mês. Considere fixo o juro da poupança em 0,70% a. m.",
+      "test_cases": [
+        {
+          "input": "1000",
+          "expected_output": "1007"
+        },
+        {
+          "input": "2500",
+          "expected_output": "2517.5"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 12",
+      "description": "A Loja Mamão com Açúcar está vendendo seus produtos em 5 (cinco) prestações sem juros. Faça um algoritmo que receba um valor de uma compra e mostre o valor das prestações.",
+      "test_cases": [
+        {
+          "input": "500",
+          "expected_output": "100"
+        },
+        {
+          "input": "123.45",
+          "expected_output": "24.69"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 13",
+      "description": "Faça um algoritmo que receba o preço de custo de um produto e mostre o valor de venda. Sabe-se que o preço de custo receberá um acréscimo de acordo com um percentual informado pelo usuário.",
+      "test_cases": [
+        {
+          "input": "200 30",
+          "expected_output": "260"
+        },
+        {
+          "input": "150 15",
+          "expected_output": "172.5"
+        }
+      ]
+    },
+    {
+      "title": "Exercício 14",
+      "description": "Escrever um algoritmo para determinar o consumo médio de um automóvel sendo fornecida a distância total percorrida pelo automóvel e o total de combustível gasto.",
+      "test_cases": [
+        {
+          "input": "500 25",
+          "expected_output": "20"
+        }
+      ]
+    }
+  ]
+}

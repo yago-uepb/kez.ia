@@ -2,11 +2,11 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from src.core.database import close_db_connection, connect_db
-from src.features.examples.examples import router as example_routes
-
-# from src.features.ai.ai_router import router as ai_routes
-from src.features.submits.submit_router import router as submit_routes
+from .core.database import close_db_connection, connect_db
+from .features.ai.router import router as ai_routes
+from .features.lists.router import router as list_routes
+from .features.problems.router import router as problem_routes
+from .features.submits.router import router as submit_routes
 
 
 @asynccontextmanager
@@ -16,11 +16,12 @@ async def lifespan(app):
     await close_db_connection() # roda ao encerrar
 
 app = FastAPI(
-    title="Code Mentor AI — API Documentation", 
+    title="kez.ia — API Documentation", 
     version="0.1.0", 
     lifespan=lifespan
 )
 
-# app.include_router(ai_routes)
+app.include_router(ai_routes)
+app.include_router(list_routes)
 app.include_router(submit_routes)
-app.include_router(example_routes)
+app.include_router(problem_routes)

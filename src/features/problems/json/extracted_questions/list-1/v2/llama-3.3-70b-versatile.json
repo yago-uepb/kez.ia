@@ -1,0 +1,90 @@
+{
+  "is_exercise_list": true,
+  "reason": "Conteúdo apresenta uma lista de exercícios de programação",
+  "questions": [
+    {
+      "title": "Exercício 1",
+      "description": "Faça um Programa que peça um número e então mostre a mensagem: O número informado foi [número]."
+    },
+    {
+      "title": "Exercício 2",
+      "description": "Faça um Programa que peça dois números e imprima a soma."
+    },
+    {
+      "title": "Exercício 3",
+      "description": "Faça um Programa que peça as 4 notas bimestrais e mostre a média."
+    },
+    {
+      "title": "Exercício 4",
+      "description": "Faça um Programa que converta metros para centímetros."
+    },
+    {
+      "title": "Exercício 5",
+      "description": "Faça um Programa que peça o raio de um círculo, calcule e mostre sua área."
+    },
+    {
+      "title": "Exercício 6",
+      "description": "Faça um Programa que calcule a área de um quadrado, em seguida mostre o dobro desta área para o usuário."
+    },
+    {
+      "title": "Exercício 7",
+      "description": "Faça um Programa que pergunte quanto você ganha por hora e o número de horas trabalhadas no mês. Calcule e mostre o total do seu salário no referido mês."
+    },
+    {
+      "title": "Exercício 8",
+      "description": "Faça um Programa que peça a temperatura em graus Farenheit, transforme e mostre a temperatura em graus Celsius. C = (5 * (F-32) / 9)."
+    },
+    {
+      "title": "Exercício 9",
+      "description": "Faça um Programa que peça a temperatura em graus Celsius, transforme e mostre em graus Farenheit."
+    },
+    {
+      "title": "Exercício 10",
+      "description": "Elaborar um algoritmo que efetue a apresentação do valor da conversão em real (R$) de um valor lido em dólar (US$). O algoritmo deverá solicitar o valor da cotação do dólar e também a quantidade de dólares disponíveis com o usuário."
+    },
+    {
+      "title": "Exercício 11",
+      "description": "Faça um algoritmo que receba um valor que foi depositado e exiba o valor com rendimento após um mês. Considere fixo o juro da poupança em 0,70% a. m."
+    },
+    {
+      "title": "Exercício 12",
+      "description": "A Loja Mamão com Açúcar está vendendo seus produtos em 5 (cinco) prestações sem juros. Faça um algoritmo que receba um valor de uma compra e mostre o valor das prestações."
+    },
+    {
+      "title": "Exercício 13",
+      "description": "Faça um algoritmo que receba o preço de custo de um produto e mostre o valor de venda. Sabe-se que o preço de custo receberá um acréscimo de acordo com um percentual informado pelo usuário."
+    },
+    {
+      "title": "Exercício 14",
+      "description": "Escrever um algoritmo para determinar o consumo médio de um automóvel sendo fornecida a distância total percorrida pelo automóvel e o total de combustível gasto."
+    },
+    {
+      "title": "Exercício 15",
+      "description": "Escreva um programa que leia três números inteiros e positivos (A, B, C) e calcule a seguinte expressão: "
+    },
+    {
+      "title": "Exercício 16",
+      "description": "Escrever um algoritmo que leia o nome de um vendedor, o seu salário fixo e o total de vendas efetuadas por ele no mês (em dinheiro). Sabendo que este vendedor ganha 15% de comissão sobre suas vendas efetuadas, informar o seu nome, o salário fixo e salário no final do mês."
+    },
+    {
+      "title": "Exercício 17",
+      "description": "Faça um Programa que peça 2 números inteiros e um número real. Calcule e mostre: o produto do dobro do primeiro com metade do segundo . a soma do triplo do primeiro com o terceiro. o terceiro elevado ao cubo."
+    },
+    {
+      "title": "Exercício 18",
+      "description": "Tendo como dados de entrada a altura de uma pessoa, construa um algoritmo que calcule seu peso ideal, usando a seguinte fórmula: (72.7*altura) – 58."
+    },
+    {
+      "title": "Exercício 19",
+      "description": "Faça um programa que peça o tamanho de um arquivo para download (em MB) e a velocidade de um link de Internet (em MBps), calcule e informe o tempo aproximado de download do arquivo usando este link (em minutos)."
+    },
+    {
+      "title": "Exercício 20",
+      "description": "Ler dois valores para as variáveis A e B, e efetuar as trocas dos valores de forma que a variável A passe a possuir o valor da variável B e a variável B passe a possuir o valor da variável A. Apresentar os valores trocados."
+    },
+    {
+      "title": "Exercício 21",
+      "description": "Faça um Programa que pergunte quanto você ganha por hora e o número de horas trabalhadas no mês. Calcule e mostre o total do seu salário no referido mês, sabendo-se que são descontados 11% para o Imposto de Renda, 8% para o INSS e 5% para o sindicato, faça um programa que nos dê: salário bruto. quanto pagou ao INSS. quanto pagou ao sindicato. o salário líquido."
+    }
+  ]
+}

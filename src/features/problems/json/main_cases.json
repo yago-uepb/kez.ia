@@ -1,0 +1,416 @@
+[
+  {
+    "title": "Soma de dois números",
+    "description": "Faça um Programa que peça dois números e imprima a soma.",
+    "test_cases": [
+      {
+        "input": "10\n20",
+        "expected_output": "30"
+      },
+      {
+        "input": "-5\n12",
+        "expected_output": "7"
+      }
+    ]
+  },
+  {
+    "title": "Média de notas",
+    "description": "Faça um Programa que peça as 4 notas bimestrais e mostre a média.",
+    "test_cases": [
+      {
+        "input": "7\n8\n9\n10",
+        "expected_output": "8.5"
+      },
+      {
+        "input": "5\n5\n6\n4",
+        "expected_output": "5.0"
+      }
+    ]
+  },
+  {
+    "title": "Classificação por sinal",
+    "description": "Faça um Programa que peça um valor e mostre na tela se o valor é positivo ou negativo.",
+    "test_cases": [
+      {
+        "input": "10",
+        "expected_output": "positivo"
+      },
+      {
+        "input": "-7",
+        "expected_output": "negativo"
+      }
+    ]
+  },
+  {
+    "title": "Classificação textual por opção",
+    "description": "Faça um Programa que verifique se uma letra digitada é \"F\" ou \"M\". Conforme a letra escrever: F - Feminino, M - Masculino, Sexo Inválido.",
+    "test_cases": [
+      {
+        "input": "F",
+        "expected_output": "Feminino"
+      },
+      {
+        "input": "M",
+        "expected_output": "Masculino"
+      },
+      {
+        "input": "X",
+        "expected_output": "Sexo Inválido"
+      }
+    ]
+  },
+  {
+    "title": "Múltiplas saídas numéricas",
+    "description": "Faça um Programa que pergunte quanto você ganha por hora e o número de horas trabalhadas no mês. Calcule e mostre o total do seu salário no referido mês, sabendo-se que são descontados 11% para o Imposto de Renda, 8% para o INSS e 5% para o sindicato, faça um programa que nos dê: a) salário bruto. b) quanto pagou ao INSS. c) quanto pagou ao sindicato. d) o salário líquido. e) calcule os descontos e o salário líquido, conforme a tabela abaixo.",
+    "test_cases": [
+      {
+        "input": "10\n100",
+        "expected_output": "Salário Bruto : R$ 1000.00\nIR (11%) : R$ 110.00\nINSS (8%) : R$ 80.00\nSindicato (5%) : R$ 50.00\nSalário Liquido : R$ 760.00"
+      }
+    ]
+  },
+  {
+    "title": "Classificação por faixas",
+    "description": "Faça um programa para o cálculo de uma folha de pagamento, sabendo que os descontos são do Imposto de Renda, que depende do salário bruto (conforme tabela abaixo) e 3% para o Sindicato e que o FGTS corresponde a 11% do Salário Bruto, mas não é descontado (é a empresa que deposita). O Salário Líquido corresponde ao Salário Bruto menos os descontos. O programa deverá pedir ao usuário o valor da sua hora e a quantidade de horas trabalhadas no mês.",
+    "test_cases": [
+      {
+        "input": "5\n220",
+        "expected_output": "Salário Bruto: R$ 1100.00\nIR (5%): R$ 55.00\nINSS (10%): R$ 110.00\nFGTS (11%): R$ 121.00\nTotal de descontos: R$ 165.00\nSalário Liquido: R$ 935.00"
+      },
+      {
+        "input": "10\n90",
+        "expected_output": "Salário Bruto: R$ 900.00\nIR (0%): R$ 0.00\nINSS (10%): R$ 90.00\nFGTS (11%): R$ 99.00\nTotal de descontos: R$ 90.00\nSalário Liquido: R$ 810.00"
+      }
+    ]
+  },
+  {
+    "title": "Sequência de tamanho fixo",
+    "description": "Faça um Programa que leia 10 números reais e mostre-os na ordem inversa.",
+    "test_cases": [
+      {
+        "input": "1.5\n2.5\n3.5\n4.5\n5.5\n6.5\n7.5\n8.5\n9.5\n10.5",
+        "expected_output": "10.5\n9.5\n8.5\n7.5\n6.5\n5.5\n4.5\n3.5\n2.5\n1.5"
+      }
+    ]
+  },
+  {
+    "title": "Separação de listas",
+    "description": "Faça um Programa que leia 20 números inteiros e armazene-os numa lista. Armazene os números pares na lista PAR e os números IMPARES na lista impar. Imprima as três listas.",
+    "test_cases": [
+      {
+        "input": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20",
+        "expected_output": "Lista: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]\nPAR: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]\nIMPAR: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]"
+      }
+    ]
+  },
+  {
+    "title": "Busca em lista",
+    "description": "Escreva um algoritmo que permita a leitura dos nomes de 10 pessoas e armazene os nomes lidos em uma lista. Após isto, o algoritmo deve permitir a leitura de mais 1 nome qualquer de pessoa e depois escrever a mensagem ACHEI, se o nome estiver entre os 10 nomes lidos anteriormente (guardados na lista), ou NÃO ACHEI caso contrário.",
+    "test_cases": [
+      {
+        "input": "Ana\nBruno\nCarlos\nDaniela\nEduardo\nFernanda\nGabriel\nHelena\nIgor\nJoana\nGabriel",
+        "expected_output": "ACHEI"
+      },
+      {
+        "input": "Ana\nBruno\nCarlos\nDaniela\nEduardo\nFernanda\nGabriel\nHelena\nIgor\nJoana\nMarcos",
+        "expected_output": "NÃO ACHEI"
+      }
+    ]
+  },
+  {
+    "title": "Entrada de tamanho indeterminado com sentinela",
+    "description": "Faça um programa que leia um número indeterminado de valores, correspondentes a notas, encerrando a entrada de dados quando for informado um valor igual a -1 (que não deve ser armazenado). Após esta entrada de dados, faça: a. Mostre a quantidade de valores que foram lidos; b. Exiba todos os valores na ordem em que foram informados; c. Exiba todos os valores na ordem inversa à que foram informados; d. Calcule e mostre a soma dos valores; e. Calcule e mostre a média dos valores; f. Calcule e mostre a quantidade de valores acima da média calculada; g. Calcule e mostre a quantidade de valores abaixo de sete; h. Encerre o programa com uma mensagem.",
+    "test_cases": [
+      {
+        "input": "8\n6\n10\n5\n-1",
+        "expected_output": "Quantidade: 4\nOrdem informada: 8 6 10 5\nOrdem inversa: 5 10 6 8\nSoma: 29\nMédia: 7.25\nAcima da média: 2\nAbaixo de sete: 2"
+      },
+      {
+        "input": "7\n7\n7\n-1",
+        "expected_output": "Quantidade: 3\nOrdem informada: 7 7 7\nOrdem inversa: 7 7 7\nSoma: 21\nMédia: 7.0\nAcima da média: 0\nAbaixo de sete: 0"
+      }
+    ]
+  },
+  {
+    "title": "Sequência com sentinela e validação",
+    "description": "Uma empresa de pesquisas precisa tabular os resultados da seguinte enquete feita a uma grande quantidade de organizações: \"Qual o melhor Sistema Operacional para uso em servidores?\" As possíveis respostas são: 1- Windows Server; 2- Unix; 3- Linux; 4- Netware; 5- Mac OS; 6- Outro. Você foi contratado para desenvolver um programa que leia o resultado da enquete e informe ao final o resultado da mesma. O programa deverá ler os valores até ser informado o valor 0, que encerra a entrada dos dados. Não deverão ser aceitos valores além dos válidos para o programa (0 a 6). Os valores referentes a cada uma das opções devem ser armazenados numa lista. Após os dados terem sido completamente informados, o programa deverá calcular o percentual de cada um dos concorrentes e informar o vencedor da enquete.",
+    "test_cases": [
+      {
+        "input": "1\n2\n3\n2\n2\n3\n0",
+        "expected_output": "Windows Server 1 16.67%\nUnix 3 50.00%\nLinux 2 33.33%\nNetware 0 0.00%\nMac OS 0 0.00%\nOutro 0 0.00%\nTotal 6\nO Sistema Operacional mais votado foi o Unix, com 3 votos"
+      },
+      {
+        "input": "1\n7\n2\n0",
+        "expected_output": "Entrada inválida: 7\nWindows Server 1 50.00%\nUnix 1 50.00%\nLinux 0 0.00%\nNetware 0 0.00%\nMac OS 0 0.00%\nOutro 0 0.00%\nTotal 2"
+      }
+    ]
+  },
+  {
+    "title": "Série numérica",
+    "description": "Sendo H = 1 + 1/2 + 1/3 + 1/4 + ... + 1/N. Faça um programa para gerar e mostrar o número H. O número N será fornecido como entrada.",
+    "test_cases": [
+      {
+        "input": "1",
+        "expected_output": "1.0"
+      },
+      {
+        "input": "2",
+        "expected_output": "1.5"
+      },
+      {
+        "input": "5",
+        "expected_output": "2.2833333333"
+      }
+    ]
+  },
+  {
+    "title": "Aproximação numérica",
+    "description": "Faça um programa que recebe o número real x como entrada e devolva uma aproximação do arco tangente de x (em radianos) através da série. Considere a aproximação para 50 termos.",
+    "test_cases": [
+      {
+        "input": "0",
+        "expected_output": "0.0"
+      },
+      {
+        "input": "1",
+        "expected_output": "0.7853981634"
+      },
+      {
+        "input": "-1",
+        "expected_output": "-0.7853981634"
+      }
+    ]
+  },
+  {
+    "title": "Matriz com busca",
+    "description": "Leia uma matriz 5 x 5. Leia também um valor X. O programa deverá fazer uma busca desse valor na matriz e, ao final, escrever a localização (linha e coluna) ou uma mensagem de “não encontrado”.",
+    "test_cases": [
+      {
+        "input": "1 2 3 4 5\n6 7 8 9 10\n11 12 13 14 15\n16 17 18 19 20\n21 22 23 24 25\n13",
+        "expected_output": "Linha: 3\nColuna: 3"
+      },
+      {
+        "input": "1 2 3 4 5\n6 7 8 9 10\n11 12 13 14 15\n16 17 18 19 20\n21 22 23 24 25\n30",
+        "expected_output": "não encontrado"
+      }
+    ]
+  },
+  {
+    "title": "Matriz diagonal",
+    "description": "Declare uma matriz 5 x 5. Preencha com 1 a diagonal principal e com 0 os demais elementos. Escreva ao final a matriz obtida.",
+    "test_cases": [
+      {
+        "input": "",
+        "expected_output": "1 0 0 0 0\n0 1 0 0 0\n0 0 1 0 0\n0 0 0 1 0\n0 0 0 0 1"
+      }
+    ]
+  },
+  {
+    "title": "Operações com duas matrizes",
+    "description": "Leia duas matrizes 2 x 2 com valores reais. Ofereça ao usuário um menu de opções: (a) somar as duas matrizes (b) subtrair a primeira matriz da segunda (c) adicionar uma constante às duas matrizes (d) imprimir as matrizes. Nas duas primeiras opções uma terceira matriz deve ser criada. Na terceira opção o valor da constante deve ser lido e o resultado da adição da constante deve ser armazenado na própria matriz.",
+    "test_cases": [
+      {
+        "input": "1 2\n3 4\n5 6\n7 8\na",
+        "expected_output": "6 8\n10 12"
+      },
+      {
+        "input": "1 2\n3 4\n5 6\n7 8\nb",
+        "expected_output": "4 4\n4 4"
+      },
+      {
+        "input": "1 2\n3 4\n5 6\n7 8\nc\n10",
+        "expected_output": "11 12\n13 14\n15 16\n17 18"
+      }
+    ]
+  },
+  {
+    "title": "Saída tabular formatada",
+    "description": "Desenvolva um gerador de tabuada, capaz de gerar a tabuada de qualquer número inteiro entre 1 a 10. O usuário deve informar de qual numero ele deseja ver a tabuada. A saída deve ser conforme o exemplo abaixo: Tabuada de 5: 5 X 1 = 5 5 X 2 = 10 ... 5 X 10 = 50.",
+    "test_cases": [
+      {
+        "input": "5",
+        "expected_output": "Tabuada de 5:\n5 X 1 = 5\n5 X 2 = 10\n5 X 3 = 15\n5 X 4 = 20\n5 X 5 = 25\n5 X 6 = 30\n5 X 7 = 35\n5 X 8 = 40\n5 X 9 = 45\n5 X 10 = 50"
+      }
+    ]
+  },
+  {
+    "title": "Múltiplas respostas textuais",
+    "description": "Faça um programa que faça 5 perguntas para uma pessoa sobre um crime. As perguntas são: \"Telefonou para a vítima?\" \"Esteve no local do crime?\" \"Mora perto da vítima?\" \"Devia para a vítima?\" \"Já trabalhou com a vítima?\" O programa deve no final emitir uma classificação sobre a participação da pessoa no crime. Se a pessoa responder positivamente a 2 questões ela deve ser classificada como \"Suspeita\", entre 3 e 4 como \"Cúmplice\" e 5 como \"Assassino\". Caso contrário, ele será classificado como \"Inocente\".",
+    "test_cases": [
+      {
+        "input": "S\nS\nN\nN\nN",
+        "expected_output": "Suspeita"
+      },
+      {
+        "input": "S\nS\nS\nN\nN",
+        "expected_output": "Cúmplice"
+      },
+      {
+        "input": "S\nS\nS\nS\nS",
+        "expected_output": "Assassino"
+      },
+      {
+        "input": "N\nN\nN\nN\nN",
+        "expected_output": "Inocente"
+      }
+    ]
+  },
+  {
+    "title": "Entrada textual interativa",
+    "description": "Faça um programa para validar o login e a senha de um usuário. Caso o usuário informe algum valor inválido informar o erro e pedir novamente os dados. A leitura dos dados deve ser encerrada quando o usuário digitar 3 vezes um valor inválido (login ou senha). Considere o login válido como \"kezia\" e a senha como \"123\".",
+    "test_cases": [
+      {
+        "input": "kezia\n123",
+        "expected_output": "Login e senha válidos"
+      },
+      {
+        "input": "usuario\n123\nkezia\n123",
+        "expected_output": "Valor inválido\nLogin e senha válidos"
+      },
+      {
+        "input": "abc\n111\nxyz\n222\nfoo\n333",
+        "expected_output": "Valor inválido\nValor inválido\nValor inválido\nNúmero máximo de tentativas inválidas atingido"
+      }
+    ]
+  },
+  {
+    "title": "Entrada com múltiplos tipos de dados",
+    "description": "Escreva um algoritmo que leia o nome de um vendedor, o seu salário fixo e o total de vendas efetuadas por ele no mês (em dinheiro). Sabendo que este vendedor ganha 15% de comissão sobre suas vendas efetuadas, informar o seu nome, o salário fixo e salário no final do mês.",
+    "test_cases": [
+      {
+        "input": "Carlos\n2000\n10000",
+        "expected_output": "Carlos\nSalário fixo: R$ 2000.00\nSalário no final do mês: R$ 3500.00"
+      },
+      {
+        "input": "Ana\n1500\n5000",
+        "expected_output": "Ana\nSalário fixo: R$ 1500.00\nSalário no final do mês: R$ 2250.00"
+      }
+    ]
+  },
+  {
+    "title": "Segundo maior elemento",
+    "description": "Escreva um programa em Python para encontrar o segundo maior elemento de uma lista com 20 números inteiros. OBS: todos os valores informados serão de valores diferentes e a solução não deve fazer este tratamento das entradas. Além disso, a solução não deve modificar a lista original com a ordem fornecida dos números.",
+    "test_cases": [
+      {
+        "input": "10\n3\n25\n7\n18\n2\n30\n14\n9\n21\n5\n27\n1\n16\n8\n24\n12\n6\n20\n4",
+        "expected_output": "27"
+      },
+      {
+        "input": "100\n50\n75\n25\n10\n90\n80\n70\n60\n40\n30\n20\n15\n5\n95\n85\n65\n45\n35\n55",
+        "expected_output": "90"
+      }
+    ]
+  },
+  {
+    "title": "Conversão de inteiro para binário com sinal e magnitude",
+    "description": "Escreva um programa em Python para converter um número inteiro em binário de acordo com a representação de grandeza com sinal (sinal e magnitude). O programa deve receber um número inteiro e produzir como saída uma lista com os bits do número convertido (um bit para cada posição da lista). Além disso deve ser feita a verificação se o número pode ser representado, considere uma representação com 8 bits (um para o sinal e 7 para a magnitude).",
+    "test_cases": [
+      {
+        "input": "5",
+        "expected_output": "[0, 0, 0, 0, 0, 1, 0, 1]"
+      },
+      {
+        "input": "-5",
+        "expected_output": "[1, 0, 0, 0, 0, 1, 0, 1]"
+      },
+      {
+        "input": "127",
+        "expected_output": "[0, 1, 1, 1, 1, 1, 1, 1]"
+      },
+      {
+        "input": "128",
+        "expected_output": "Número não pode ser representado"
+      }
+    ]
+  },
+  {
+    "title": "Matriz com cálculo posicional",
+    "description": "Leia uma matriz de 3 x 3 elementos. Calcule a soma dos elementos que estão acima da diagonal principal.",
+    "test_cases": [
+      {
+        "input": "1 2 3\n4 5 6\n7 8 9",
+        "expected_output": "11"
+      },
+      {
+        "input": "5 10 15\n20 25 30\n35 40 45",
+        "expected_output": "55"
+      }
+    ]
+  },
+  {
+    "title": "Cálculo com intervalo",
+    "description": "Faça um programa que receba dois números inteiros e gere os números inteiros que estão no intervalo compreendido por eles.",
+    "test_cases": [
+      {
+        "input": "2\n6",
+        "expected_output": "2\n3\n4\n5\n6"
+      },
+      {
+        "input": "6\n2",
+        "expected_output": "6\n5\n4\n3\n2"
+      }
+    ]
+  },
+  {
+    "title": "Classificação de triângulo",
+    "description": "Faça um Programa que peça os 3 lados de um triângulo. O programa deverá informar se os valores podem ser um triângulo. Indique, caso os lados formem um triângulo, se o mesmo é: equilátero, isósceles ou escaleno.",
+    "test_cases": [
+      {
+        "input": "5\n5\n5",
+        "expected_output": "Equilátero"
+      },
+      {
+        "input": "5\n5\n3",
+        "expected_output": "Isósceles"
+      },
+      {
+        "input": "3\n4\n5",
+        "expected_output": "Escaleno"
+      },
+      {
+        "input": "1\n2\n3",
+        "expected_output": "Não forma um triângulo"
+      }
+    ]
+  },
+  {
+    "title": "Equação do segundo grau",
+    "description": "Faça um programa que calcule as raízes de uma equação do segundo grau, na forma ax2 + bx + c. O programa deverá pedir os valores de a, b e c e fazer as consistências, informando ao usuário nas seguintes situações: Se o usuário informar o valor de A igual a zero, a equação não é do segundo grau e o programa não deve fazer pedir os demais valores, sendo encerrado; Se o delta calculado for negativo, a equação não possui raizes reais. Informe ao usuáro e encerre o programa; Se o delta calculado for igual a zero a equação possui apenas uma raiz real; informe-a ao usuário; Se o delta for positivo, a equação possui duas raiz reais; informe-as ao usuário.",
+    "test_cases": [
+      {
+        "input": "1\n-5\n6",
+        "expected_output": "Duas raízes reais: 2.0 e 3.0"
+      },
+      {
+        "input": "1\n-4\n4",
+        "expected_output": "Uma raiz real: 2.0"
+      },
+      {
+        "input": "1\n2\n5",
+        "expected_output": "A equação não possui raízes reais"
+      },
+      {
+        "input": "0",
+        "expected_output": "A equação não é do segundo grau"
+      }
+    ]
+  },
+  {
+    "title": "Caixa eletrônico",
+    "description": "Faça um Programa para um caixa eletrônico. O programa deverá perguntar ao usuário a valor do saque e depois informar quantas notas de cada valor serão fornecidas. As notas disponíveis serão as de 1, 5, 10, 50 e 100 reais. O valor mínimo é de 10 reais e o máximo de 600 reais. O programa não deve se preocupar com a quantidade de notas existentes na máquina.",
+    "test_cases": [
+      {
+        "input": "256",
+        "expected_output": "Notas de 100: 2\nNotas de 50: 1\nNotas de 10: 0\nNotas de 5: 1\nNotas de 1: 1"
+      },
+      {
+        "input": "399",
+        "expected_output": "Notas de 100: 3\nNotas de 50: 1\nNotas de 10: 4\nNotas de 5: 1\nNotas de 1: 4"
+      },
+      {
+        "input": "10",
+        "expected_output": "Notas de 100: 0\nNotas de 50: 0\nNotas de 10: 1\nNotas de 5: 0\nNotas de 1: 0"
+      }
+    ]
+  }
+]
