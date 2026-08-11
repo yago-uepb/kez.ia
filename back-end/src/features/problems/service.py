@@ -4,7 +4,7 @@ from asyncpg import Connection
 from fastapi import Depends
 
 from src.shared.dependencies import get_connection
-from src.shared.exceptions import NotFoundException
+from src.shared.exceptions import NotFoundException, ValidationException
 
 
 class ProblemService:
@@ -90,3 +90,64 @@ class ProblemService:
                 created_problems.append(dict(row))
 
             return created_problems
+
+
+
+
+    async def get_problem(self, id):
+        row = await self.connection.fetchrow(
+        """
+        SELECT id, title, description, input, expected_output
+        FROM problems
+        WHERE id = $1
+        """, id,
+        )
+
+        if row is None:
+            raise NotFoundException(
+                f"O problema {id} não foi encontrado!",
+            )
+        return dict(row)
+    
+
+    async def patch_problem(self, id, payload):
+        fields = payload.model_dump(exclude_unset=True)
+        if not fields:
+            raise ValidationException("Nenhum campo para atualizar.")
+
+        set_clause = ", ".join(f"{field} = ${i}" for i, field in enumerate(fields, start=1))
+        values = list(fields.values())
+
+        row = await self.connection.fetchrow(
+            f"""
+            UPDATE problems
+            SET {set_clause}
+            WHERE id = ${len(values) + 1}
+            RETURNING id, title, description, input, expected_output
+            """,
+            *values,
+            id,
+        )
+
+        if row is None:
+            raise NotFoundException(
+                f"O Problema {id} não foi encontrado.",
+            )
+        return dict(row)
+
+
+    async def delete_problems(self, ids):
+        deleted_rows = await self.connection.fetch(
+            """
+            DELETE FROM problems
+            WHERE id = ANY($1::int[])
+            RETURNING id
+            """,
+            ids,
+        )
+
+        if not deleted_rows:
+            raise NotFoundException(
+                f"Nenhum dos problemas informados foram encontrados.",
+            )
+        return [row["id"] for row in deleted_rows]

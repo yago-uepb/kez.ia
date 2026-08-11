@@ -38,3 +38,13 @@ class AddProblemsResponse(BaseModel):
     # Define os dados enviados na resposta.
     list_id: int
     problems: list[ProblemResponse]
+
+
+class ProblemPatchRequest(BaseModel):
+    title: str | None = Field(default= None, min_length=3, max_length=255)
+    description: str | None = None
+    input: str | None = None
+    expected_output : str | None = None
+
+class DeleteProblemRequest(BaseModel):
+    ids: list[int] = Field(..., min_length=1) 
