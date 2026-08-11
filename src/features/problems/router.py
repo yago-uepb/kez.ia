@@ -1,31 +1,31 @@
 from typing import Annotated
 
-from asyncpg import Connection
-from fastapi import APIRouter, Depends, Path
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, Body, Depends, Path
 
-from src.shared.dependencies import get_connection
-from src.shared.exceptions import NotFoundException
+from .schemas import AddProblemsRequest, AddProblemsResponse
+from .service import ProblemService
 
 router = APIRouter(tags=["Problems"])
 
-class GetProblemRequest(BaseModel):
-    id: int = Field(ge=1)
 
-@router.get("/problems/{id}")
-async def get_problem(
-    path_parameters: Annotated[GetProblemRequest, Path()],
-    connection: Annotated[Connection, Depends(get_connection)]
+@router.post(
+    "/lists/{list_id}/problems",
+    response_model=AddProblemsResponse,
+    status_code=201,
+)
+async def add_problems(
+    list_id: Annotated[int, Path()],
+    body: Annotated[AddProblemsRequest, Body()],
+    service: Annotated[ProblemService, Depends()],
 ):
-    exists = await connection.fetchrow(
-        """
-        SELECT * FROM problems WHERE id = $1 
-        """, path_parameters.id
+    # Recebe a requisição e envia os dados para o service.
+    problems = await service.add_problems_to_list(
+        list_id,
+        body.problems,
     )
 
-    if not exists:
-        raise NotFoundException("Problema não encontrado")
-     
-    problem = dict(exists)
-
-    return problem
+    # Retorna os problemas criados.
+    return AddProblemsResponse(
+        list_id=list_id,
+        problems=problems,
+    )

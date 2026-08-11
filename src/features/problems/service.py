@@ -1,0 +1,92 @@
+from typing import Annotated
+
+from asyncpg import Connection
+from fastapi import Depends
+
+from src.shared.dependencies import get_connection
+from src.shared.exceptions import NotFoundException
+
+
+class ProblemService:
+
+    def __init__(
+        self, 
+        connection: Annotated[Connection, Depends(get_connection)]
+    ):
+        # Guarda a conexão recebida para acessar o banco.
+        self.connection = connection
+
+
+    async def list_exists(self, list_id):
+        # Verifica se a lista informada existe.
+        row = await self.connection.fetchrow(
+            "SELECT id FROM lists WHERE id = $1",
+            list_id,
+        )
+
+        return row is not None
+        
+
+    async def add_problems_to_list(self, list_id, problems):
+        # Cria os problemas e associa cada um à lista.
+        async with self.connection.transaction():
+
+            if not await self.list_exists(list_id):
+                raise NotFoundException(
+                    f"A lista {list_id} não foi encontrada.",
+                )
+
+            created_problems = []
+
+            for problem in problems:
+                test_cases = problem.test_cases
+                
+                # Cria o problema e retorna os dados gerados pelo banco.
+                row = await self.connection.fetchrow(
+                    """
+                    INSERT INTO problems (
+                        title,
+                        description,
+                        input,
+                        expected_output
+                    )
+                    VALUES ($1, $2, $3, $4)
+                    RETURNING id, title, description, input, expected_output
+                    """,
+                    problem.title,
+                    problem.description,
+                    test_cases[0].input,
+                    test_cases[0].expected_output,
+                )
+
+                # Associa o problema criado à lista.
+                await self.connection.execute(
+                    """
+                    INSERT INTO list_problems 
+                        (list_id, problem_id)
+                    VALUES 
+                        ($1, $2)
+                    """,
+                    list_id,
+                    row["id"],
+                )
+
+                # Prepara todos os casos de teste, EXCLUINDO o primeiro já inserido
+                tuple_test_cases = [
+                    (row["id"], case.input, case.expected_output) 
+                    for case in test_cases[1:]
+                ]
+
+                # Insere tuple_test_cases em lote
+                await self.connection.executemany(
+                    """
+                    INSERT INTO test_cases (problem_id, input, expected_output)
+                    VALUES ($1, $2, $3)
+                    """,
+                    tuple_test_cases
+                )
+
+                # Guarda o problema criado para retorná-lo.
+                created_problems.append(dict(row))
+
+            return created_problems
