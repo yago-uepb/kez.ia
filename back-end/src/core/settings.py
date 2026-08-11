@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     DATABASE_URL: str
+    FRONTEND_URL: str
     GROQ_API_KEY: str
 
     # Busca automaticamente o arquivo .env na raiz do projeto

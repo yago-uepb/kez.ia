@@ -23,5 +23,5 @@ app = FastAPI(
 
 app.include_router(ai_routes)
 app.include_router(list_routes)
-app.include_router(submit_routes)
 app.include_router(problem_routes)
+app.include_router(submit_routes)
