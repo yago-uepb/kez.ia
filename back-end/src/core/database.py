@@ -1,5 +1,6 @@
 import logging
 import re
+from contextlib import asynccontextmanager
 
 import aiosqlite
 import asyncpg
@@ -10,70 +11,273 @@ logger = logging.getLogger(__name__)
 
 pool = None
 db_type = None  # "postgres" ou "sqlite"
+
 SQLITE_PATH = "fallback.db"
 
 
 class SQLiteConnectionAdapter:
     """
-    Adapta a interface do asyncpg para aiosqlite, cobrindo os padrões
-    de query usados no projeto: $N -> ?, ILIKE -> LIKE,
-    e = ANY($N::tipo[]) -> IN (?, ?, ...).
+    Adapta a interface utilizada pelo projeto com asyncpg
+    para aiosqlite.
+
+    Compatibilidades implementadas:
+    - $1, $2, ... -> ?
+    - ILIKE -> LIKE
+    - = ANY($N::tipo[]) -> IN (?, ?, ...)
+    - execute()
+    - executemany()
+    - fetch()
+    - fetchrow()
+    - fetchval()
+    - transaction()
     """
 
     _ANY_ARRAY_PATTERN = re.compile(
-        r"=\s*ANY\(\$(\d+)::\w+\[\]\)", re.IGNORECASE
+        r"=\s*ANY\(\$(\d+)::\w+\[\]\)",
+        re.IGNORECASE,
     )
+
 
     def __init__(self, connection: aiosqlite.Connection):
         self._conn = connection
+        self._transaction_depth = 0
 
-    def _convert_query_and_args(self, query: str, args: tuple):
+
+    def _convert_query_and_args(
+        self,
+        query: str,
+        args: tuple,
+    ):
         args = list(args)
 
-        # "= ANY($N::tipo[])" -> "IN (?, ?, ...)"
+        # ==========================================================
+        # PostgreSQL:
+        #
+        #   column = ANY($1::integer[])
+        #
+        # SQLite:
+        #
+        #   column IN (?, ?, ?)
+        # ==========================================================
+
         match = self._ANY_ARRAY_PATTERN.search(query)
+
         if match:
             param_index = int(match.group(1)) - 1
             array_value = args[param_index]
 
-            placeholders = ", ".join("?" for _ in array_value)
-            query = self._ANY_ARRAY_PATTERN.sub(f"IN ({placeholders})", query)
+            if not array_value:
+                # Evita gerar:
+                #
+                # IN ()
+                #
+                # que não é portável.
+                query = self._ANY_ARRAY_PATTERN.sub(
+                    "IN (NULL)",
+                    query,
+                )
+            else:
+                placeholders = ", ".join(
+                    "?" for _ in array_value
+                )
 
-            args = (
-                args[:param_index] + list(array_value) + args[param_index + 1:]
-            )
+                query = self._ANY_ARRAY_PATTERN.sub(
+                    f"IN ({placeholders})",
+                    query,
+                )
 
-        # ILIKE -> LIKE (SQLite já é case-insensitive por padrão em ASCII)
-        query = re.sub(r"\bILIKE\b", "LIKE", query, flags=re.IGNORECASE)
+                args = (
+                    args[:param_index]
+                    + list(array_value)
+                    + args[param_index + 1:]
+                )
 
-        # $1, $2... -> ?
-        query = re.sub(r"\$\d+", "?", query)
+        # PostgreSQL ILIKE -> SQLite LIKE
+        query = re.sub(
+            r"\bILIKE\b",
+            "LIKE",
+            query,
+            flags=re.IGNORECASE,
+        )
+
+        # PostgreSQL positional parameters -> SQLite
+        query = re.sub(
+            r"\$\d+",
+            "?",
+            query,
+        )
 
         return query, tuple(args)
 
-    async def execute(self, query: str, *args) -> str:
-        query, args = self._convert_query_and_args(query, args)
-        cursor = await self._conn.execute(query, args)
-        await self._conn.commit()
+
+    async def execute(
+        self,
+        query: str,
+        *args,
+    ) -> str:
+        query, args = self._convert_query_and_args(
+            query,
+            args,
+        )
+
+        cursor = await self._conn.execute(
+            query,
+            args,
+        )
+
+        # Só confirma automaticamente se NÃO estivermos
+        # dentro de uma transação explícita.
+        if self._transaction_depth == 0:
+            await self._conn.commit()
+
         return f"EXECUTED {cursor.rowcount}"
 
-    async def fetch(self, query: str, *args) -> list[dict]:
-        query, args = self._convert_query_and_args(query, args)
-        cursor = await self._conn.execute(query, args)
-        rows = await cursor.fetchall()
-        return [dict(row) for row in rows]
 
-    async def fetchrow(self, query: str, *args) -> dict | None:
-        query, args = self._convert_query_and_args(query, args)
-        cursor = await self._conn.execute(query, args)
+    async def executemany(
+        self,
+        query: str,
+        args,
+    ) -> str:
+        """
+        Executa a mesma query múltiplas vezes.
+
+        Compatível com o padrão:
+
+            await connection.executemany(
+                query,
+                [
+                    (1, 10),
+                    (1, 11),
+                    (1, 12),
+                ],
+            )
+        """
+
+        converted_query = None
+        converted_args = []
+
+        for row_args in args:
+            current_query, current_args = (
+                self._convert_query_and_args(
+                    query,
+                    tuple(row_args),
+                )
+            )
+
+            if converted_query is None:
+                converted_query = current_query
+            elif current_query != converted_query:
+                raise ValueError(
+                    "Não é possível usar executemany() com "
+                    "queries convertidas para estruturas diferentes."
+                )
+
+            converted_args.append(current_args)
+
+        if converted_query is None:
+            return "EXECUTED 0"
+
+        cursor = await self._conn.executemany(
+            converted_query,
+            converted_args,
+        )
+
+        if self._transaction_depth == 0:
+            await self._conn.commit()
+
+        return f"EXECUTED {cursor.rowcount}"
+
+
+    async def fetch(
+        self,
+        query: str,
+        *args,
+    ) -> list[dict]:
+        query, args = self._convert_query_and_args(
+            query,
+            args,
+        )
+
+        cursor = await self._conn.execute(
+            query,
+            args,
+        )
+
+        rows = await cursor.fetchall()
+
+        return [
+            dict(row)
+            for row in rows
+        ]
+
+
+    async def fetchrow(
+        self,
+        query: str,
+        *args,
+    ) -> dict | None:
+        query, args = self._convert_query_and_args(
+            query,
+            args,
+        )
+
+        cursor = await self._conn.execute(
+            query,
+            args,
+        )
+
         row = await cursor.fetchone()
+
         return dict(row) if row else None
 
-    async def fetchval(self, query: str, *args):
-        row = await self.fetchrow(query, *args)
+
+    async def fetchval(
+        self,
+        query: str,
+        *args,
+    ):
+        row = await self.fetchrow(
+            query,
+            *args,
+        )
+
         if row is None:
             return None
+
         return next(iter(row.values()))
+
+
+    @asynccontextmanager
+    async def transaction(self):
+        """
+        Simula o padrão:
+
+            async with connection.transaction():
+                ...
+        """
+
+        is_outermost = self._transaction_depth == 0
+
+        if is_outermost:
+            await self._conn.execute("BEGIN")
+
+        self._transaction_depth += 1
+
+        try:
+            yield self
+
+            self._transaction_depth -= 1
+
+            if is_outermost:
+                await self._conn.commit()
+
+        except Exception:
+            self._transaction_depth -= 1
+
+            if is_outermost:
+                await self._conn.rollback()
+
+            raise
 
 
 async def connect_db():

@@ -18,7 +18,6 @@ MAX_DOCUMENT_SIZE_MB = 10
 ALLOWED_DOCUMENTS_MIME_TYPES = (
     "application/pdf",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "text/plain",
 )
 
 @router.post("/documents/extract-questions", response_model=ExtractQuestionsResponse)

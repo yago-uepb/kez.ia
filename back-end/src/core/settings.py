@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    API_MAIN_URL: str
     DATABASE_URL: str
     FRONTEND_URL: str
     GROQ_API_KEY: str

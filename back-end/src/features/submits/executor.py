@@ -229,7 +229,7 @@ class CodeExecutor:
         self,
         actual_output,
         expected_output,
-    ) -> bool:
+    ):
         """
         Compara a saída produzida pelo aluno com a esperada.
         """

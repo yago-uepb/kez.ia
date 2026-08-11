@@ -80,8 +80,10 @@ class ProblemService:
                 # Insere tuple_test_cases em lote
                 await self.connection.executemany(
                     """
-                    INSERT INTO test_cases (problem_id, input, expected_output)
-                    VALUES ($1, $2, $3)
+                    INSERT INTO test_cases 
+                        (problem_id, input, expected_output)
+                    VALUES 
+                        ($1, $2, $3)
                     """,
                     tuple_test_cases
                 )
@@ -92,26 +94,26 @@ class ProblemService:
             return created_problems
 
 
-
-
     async def get_problem(self, id):
         row = await self.connection.fetchrow(
-        """
-        SELECT id, title, description, input, expected_output
-        FROM problems
-        WHERE id = $1
-        """, id,
+            """
+            SELECT id, title, description, input, expected_output
+            FROM problems
+            WHERE id = $1
+            """, id
         )
 
         if row is None:
             raise NotFoundException(
                 f"O problema {id} não foi encontrado!",
             )
+        
         return dict(row)
     
 
     async def patch_problem(self, id, payload):
         fields = payload.model_dump(exclude_unset=True)
+
         if not fields:
             raise ValidationException("Nenhum campo para atualizar.")
 
@@ -126,13 +128,14 @@ class ProblemService:
             RETURNING id, title, description, input, expected_output
             """,
             *values,
-            id,
+            id
         )
 
         if row is None:
             raise NotFoundException(
                 f"O Problema {id} não foi encontrado.",
             )
+        
         return dict(row)
 
 
@@ -143,11 +146,12 @@ class ProblemService:
             WHERE id = ANY($1::int[])
             RETURNING id
             """,
-            ids,
+            ids
         )
 
         if not deleted_rows:
             raise NotFoundException(
-                f"Nenhum dos problemas informados foram encontrados.",
+                "Nenhum dos problemas informados foram encontrados."
             )
+        
         return [row["id"] for row in deleted_rows]
