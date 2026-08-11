@@ -18,13 +18,21 @@ class ListService:
 
 
     @staticmethod
-    def _normalize(name):
+    def _normalize(name, description):
         name_normalized = " ".join(name.split())
-        return name_normalized
+        description_normalized = " ".join(description.split()) or None
+
+        return (
+            name_normalized, 
+            description_normalized
+        )
     
 
-    async def create(self, name, is_hidden = False):
-        name_normalized = self._normalize(name)
+    async def create(self, name, description, is_hidden = False):
+        (
+            name_normalized, 
+            description_normalized
+        ) = self._normalize(name, description)
 
         if not name_normalized:
             raise ValidationException("Nome inválido")
@@ -43,13 +51,17 @@ class ListService:
 
         row = await self.connection.fetchrow(
             """
-            INSERT INTO lists (name, is_hidden) 
-            VALUES ($1, $2) 
+            INSERT INTO lists 
+                (name, description, is_hidden) 
+            VALUES 
+                ($1, $2, $3) 
             RETURNING id
-            """, name_normalized, is_hidden
+            """, name_normalized, description_normalized, is_hidden
         )
 
         return CreateListResponse(
-            success=True,
-            id=row["id"]
+            id=row["id"],
+            name=name_normalized,
+            description=description_normalized,
+            is_hidden=is_hidden
         )
