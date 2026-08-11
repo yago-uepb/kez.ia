@@ -7,15 +7,15 @@ Insira os seguintes comandos no terminal para:
 - Gerar venv: `python -m venv .venv`
 - Ativar venv: `.\.venv\Scripts\Activate.ps1`
 
-- Gerar arquivo com pacote de dependências utilizadas atualmente: `python -m pip freeze > requirements.txt`
+- Atualizar/Gerar arquivo com pacote de dependências: `python -m pip freeze > requirements.txt`
 - Instalar dependências: `python -m pip install -r requirements.txt`
-- Desinstalar uma biblioteca em específico: `python -m pip uninstall <nome-da-biblioteca>`
+- Desinstalar alguma biblioteca em específico: `python -m pip uninstall <nome-da-biblioteca>`
 
 - Desativar venv: `deactivate`
 
 ## Execução em diferentes ambientes
 
-Após configurar o `.env` com todos os elementos necessários (destacados em `src/core/settings.py`), insira os seguintes comandos no terminal para executar:
+Após configurar o `.env` com todos os elementos necessários (destacados em [src/core/settings.py](./src/core/settings.py)), insira os seguintes comandos no terminal para executar:
 
 - Servidor em DEV : `python -m fastapi dev src/main.py --app app`
 - Servidor em PRO : `python -m fastapi run src/main.py --app app`

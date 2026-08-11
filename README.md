@@ -24,18 +24,22 @@ shutil.rmtree(root)
 
 # DOCUMENTAÇÃO
 
-- `[Visão Geral](https://docs.google.com/document/d/15wlFxLmMxsPU5cFhJRjCt6DKQca_XRwHFeXqeEGJb8Q/edit?usp=sharing)`
+- [Visão Geral](https://docs.google.com/document/d/15wlFxLmMxsPU5cFhJRjCt6DKQca_XRwHFeXqeEGJb8Q/edit?usp=sharing)
 
 ## Banco de Dados
 
-- `[Esquema Conceitual no Modelo ER](https://www.tldraw.com/f/94jtl8YQs_fM2HmvgNE35?d=v150.98.1276.695.page)`
+- [Esquema Conceitual no Modelo ER](https://www.tldraw.com/f/94jtl8YQs_fM2HmvgNE35?d=v150.98.1276.695.page)
 
-- `[Script db-fiddle](https://www.db-fiddle.com/f/joFuH6axFgMFwQuG2RusQL/2)`
+- [Script db-fiddle](https://www.db-fiddle.com/f/joFuH6axFgMFwQuG2RusQL/2)
 
 ## Fluxos da Aplicação
 
-- `[Fluxogramas](https://www.tldraw.com/f/94jtl8YQs_fM2HmvgNE35?d=v0.0.1276.695.87eJhZT2UOrdVXIyB4prx)`
+- [Fluxogramas](https://www.tldraw.com/f/94jtl8YQs_fM2HmvgNE35?d=v0.0.1276.695.87eJhZT2UOrdVXIyB4prx)
 
 # MELHORIAS FUTURAS
 
-- Cada setor tem suas perspectivas futuras mais detalhadas
+Cada setor tem suas perspectivas futuras mais detalhadas
+
+- [Front-end](front-end/README.md)
+
+- [Back-end](back-end/README.md)
