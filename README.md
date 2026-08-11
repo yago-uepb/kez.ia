@@ -8,7 +8,7 @@ De forma complementar, o sistema ainda abrange a personalização de questões e
 
 # REGRAS
 
-1. A entrada é um bloco único e sempre deve ser capturada por meio da função `input()`.
+1. A entrada é um bloco único e deve ser capturada por meio da função `input()`.
 2. Sem texto excedente, não utilize `print()`, `input()`, ou qualquer elemento que imprima um texto que destoe do que é a saída esperada.
 3. Não envie códigos maliciosos que podem danificar, alterar ou excluir a estrutura interna da API.
    Exemplo:
