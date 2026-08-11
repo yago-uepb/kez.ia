@@ -4,9 +4,9 @@ from asyncpg import Connection
 from fastapi import Depends
 
 from src.shared.dependencies import get_connection
-from src.shared.exceptions import ConflictException, ValidationException
+from src.shared.exceptions import ConflictException
 
-from .schemas import CreateListResponse
+from .schemas import CreateListRequest, CreateListResponse
 
 
 class ListService:
@@ -15,35 +15,16 @@ class ListService:
         connection: Annotated[Connection, Depends(get_connection)]
     ):
         self.connection = connection
-
-
-    @staticmethod
-    def _normalize(name, description):
-        name_normalized = " ".join(name.split())
-        description_normalized = " ".join(description.split()) or None
-
-        return (
-            name_normalized, 
-            description_normalized
-        )
     
 
-    async def create(self, name, description, is_hidden = False):
-        (
-            name_normalized, 
-            description_normalized
-        ) = self._normalize(name, description)
-
-        if not name_normalized:
-            raise ValidationException("Nome inválido")
-
+    async def create(self, data: CreateListRequest):
         exists = await self.connection.fetchrow(
             """
             SELECT id, name
             FROM lists 
             WHERE name ILIKE $1
             LIMIT 1
-            """, name_normalized
+            """, data.name
         )
 
         if exists:
@@ -56,12 +37,12 @@ class ListService:
             VALUES 
                 ($1, $2, $3) 
             RETURNING id
-            """, name_normalized, description_normalized, is_hidden
+            """, data.name, data.description, data.is_hidden
         )
 
         return CreateListResponse(
             id=row["id"],
-            name=name_normalized,
-            description=description_normalized,
-            is_hidden=is_hidden
+            name=data.name,
+            description=data.description,
+            is_hidden=data.is_hidden
         )

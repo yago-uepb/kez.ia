@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     FRONTEND_URL: str
     GROQ_API_KEY: str
+    FORCE_SQLITE_FALLBACK: bool = False
 
     # Busca automaticamente o arquivo .env na raiz do projeto
     model_config = SettingsConfigDict(

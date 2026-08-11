@@ -13,7 +13,7 @@ from .features.submits.router import router as submit_routes
 async def lifespan(app):
     await connect_db() # roda ao iniciar o servidor
     yield
-    await close_db_connection() # roda ao encerrar
+    await close_db_connection() # roda ao encerrar  
 
 app = FastAPI(
     title="kez.ia — API Documentation", 

@@ -1646,7 +1646,7 @@ Se não houver entrada explícita, use "— (sem entrada)" no campo entrada. Se 
                     <span />
                     <span />
                   </div>
-                  <div className="editor-filename">solucao.py</div>
+                  <div className="editor-filename">attempt.py</div>
                 </div>
                 <div className="editor-body">
                   <div className="gutter-wrap" ref={gutterWrapRef}>
@@ -1679,7 +1679,7 @@ Se não houver entrada explícita, use "— (sem entrada)" no campo entrada. Se 
                     ) : (
                       <Play size={16} />
                     )}
-                    {executando ? "Executando…" : "Executar e enviar"}
+                    {executando ? "Executando…" : "Enviar"}
                   </button>
                   <span className="run-hint">
                     Tab insere indentação · a numeração acompanha quebras

@@ -12,8 +12,4 @@ async def create_list(
     payload: Annotated[CreateListRequest, Body()],
     service: Annotated[ListService, Depends()]
 ):
-    return await service.create(
-        payload.name, 
-        payload.description, 
-        payload.is_hidden
-    )
+    return await service.create(payload)

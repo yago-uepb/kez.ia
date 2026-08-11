@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class TestCase(BaseModel):
@@ -8,6 +8,14 @@ class TestCase(BaseModel):
 class ExtractedQuestion(BaseModel):
     title: str = Field(min_length=3, max_length=255)
     description: str
+
+    @field_validator("title", mode="before")
+    @classmethod
+    def normalize_title(cls, v):
+        if isinstance(v, str):
+            return " ".join(v.split())
+        return v
+
 
 class ExtractQuestionsResponse(BaseModel):
     is_exercise_list: bool
@@ -25,5 +33,5 @@ class QuestionWithTestCases(BaseModel):
     test_cases: list[TestCase] = Field(default_factory=list)
 
 class SuggestTestCasesResponse(BaseModel):
-    questions: list[QuestionWithTestCases]
+    questions: list[QuestionWithTestCases] = Field(default_factory=list)
 

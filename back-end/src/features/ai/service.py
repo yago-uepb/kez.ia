@@ -25,6 +25,7 @@ from .prompts import (
 from .schemas import (
     ExtractQuestionsResponse,
     QuestionWithTestCases,
+    SuggestTestCasesRequest,
     SuggestTestCasesResponse,
 )
 
@@ -138,14 +139,14 @@ class AIService:
         )
 
     
-    async def suggest_test_cases(self, extracted_questions):
+    async def suggest_test_cases(self, data: SuggestTestCasesRequest):
         questions_with_id = [
             {
                 "id": index, 
                 "title": q.title, 
                 "description": q.description
             }
-            for index, q in enumerate(extracted_questions)
+            for index, q in enumerate(data.questions)
         ]
 
         user_prompt = json.dumps(

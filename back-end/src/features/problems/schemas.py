@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class TestCases(BaseModel):
@@ -11,6 +11,13 @@ class ProblemCreate(BaseModel):
     title: str = Field(min_length=3, max_length=255)
     description: str
     test_cases: list[TestCases] = Field(min_length=1, max_length=10)
+
+    @field_validator("title", mode="before")
+    @classmethod
+    def normalize_title(cls, v):
+        if isinstance(v, str):
+            return " ".join(v.split())
+        return v
 
 
 class AddProblemsRequest(BaseModel): # Antes de criar

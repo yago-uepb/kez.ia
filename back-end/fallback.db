@@ -1,0 +1,27 @@
+CREATE TABLE lists (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL UNIQUE,
+  is_hidden BOOLEAN DEFAULT FALSE NOT NULL,
+  description VARCHAR(255)
+);
+
+CREATE TABLE problems (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL UNIQUE,
+  description TEXT NOT NULL,
+  input TEXT,
+  expected_output TEXT NOT NULL
+);
+
+CREATE TABLE list_problems (
+  list_id INTEGER REFERENCES lists(id) ON DELETE CASCADE NOT NULL,
+  problem_id INTEGER REFERENCES problems(id) ON DELETE CASCADE NOT NULL,
+  PRIMARY KEY (list_id, problem_id)
+);
+
+CREATE TABLE test_cases (
+  id SERIAL PRIMARY KEY,
+  problem_id INTEGER REFERENCES problems(id) ON DELETE CASCADE NOT NULL,
+  input TEXT,
+  expected_output TEXT NOT NULL
+);

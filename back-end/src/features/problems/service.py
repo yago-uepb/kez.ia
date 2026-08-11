@@ -17,7 +17,7 @@ class ProblemService:
         self.connection = connection
 
 
-    async def list_exists(self, list_id):
+    async def _list_exists(self, list_id):
         # Verifica se a lista informada existe.
         row = await self.connection.fetchrow(
             "SELECT id FROM lists WHERE id = $1",
@@ -31,7 +31,7 @@ class ProblemService:
         # Cria os problemas e associa cada um à lista.
         async with self.connection.transaction():
 
-            if not await self.list_exists(list_id):
+            if not await self._list_exists(list_id):
                 raise NotFoundException(
                     f"A lista {list_id} não foi encontrada.",
                 )

@@ -44,4 +44,4 @@ async def suggest_test_cases(
     payload: Annotated[SuggestTestCasesRequest, Body()],
     service: Annotated[AIService, Depends()],
 ):
-    return await service.suggest_test_cases(payload.questions)
+    return await service.suggest_test_cases(payload)

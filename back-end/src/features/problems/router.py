@@ -14,7 +14,7 @@ router = APIRouter(tags=["Problems"])
     status_code=201,
 )
 async def add_problems(
-    list_id: Annotated[int, Path()],
+    list_id: Annotated[int, Path(ge=1)],
     body: Annotated[AddProblemsRequest, Body()],
     service: Annotated[ProblemService, Depends()],
 ):

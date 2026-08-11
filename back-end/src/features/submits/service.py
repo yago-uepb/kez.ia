@@ -16,6 +16,7 @@ from .schemas import (
     AIReviewApprovedCase,
     AIReviewRejectedCase,
     FailedCase,
+    SubmitRequest,
     SubmitResponse,
 )
 
@@ -178,11 +179,7 @@ class SubmitService:
         )
 
 
-    async def review(
-        self,
-        problem_id,
-        attempt,
-    ):
+    async def review(self, data: SubmitRequest):
         """
         Fluxo principal de correção de uma submissão.
 
@@ -193,6 +190,8 @@ class SubmitService:
         5. Solicita análise à IA.
         6. Retorna o resultado.
         """
+        problem_id = data.problem_id
+        attempt = data.attempt
 
         problem = await self._get_problem(
             problem_id

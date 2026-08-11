@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Kezia — Exercícios de Python",
+  title: "kez.ia",
   description: "Bancada de exercícios de Python com correção automática.",
 };
 
