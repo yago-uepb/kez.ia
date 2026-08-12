@@ -1,9 +1,11 @@
 from typing import Annotated
- 
+
+from fastapi import Path
 from pydantic import BaseModel, Field, field_validator
- 
+
 PositiveInt = Annotated[int, Field(ge=1)]
- 
+
+ProblemId = Annotated[int, Path(ge=1)]
  
 class TestCases(BaseModel):
     input: str | None = None # Não tem NOT NULL no banco, então pode não receber nada

@@ -78,15 +78,16 @@ class ProblemService:
                 ]
  
                 # Insere tuple_test_cases em lote
-                await self.connection.executemany(
-                    """
-                    INSERT INTO test_cases 
-                        (problem_id, input, expected_output)
-                    VALUES 
-                        ($1, $2, $3)
-                    """,
-                    tuple_test_cases
-                )
+                if tuple_test_cases:
+                    await self.connection.executemany(
+                        """
+                        INSERT INTO test_cases 
+                            (problem_id, input, expected_output)
+                        VALUES 
+                            ($1, $2, $3)
+                        """,
+                        tuple_test_cases,
+                    )
  
                 # Guarda o problema criado para retorná-lo.
                 created_problems.append(dict(row))
@@ -182,7 +183,8 @@ class ProblemService:
             UPDATE problems
             SET {set_clause}
             WHERE id = ${len(values) + 1}
-            RETURNING id, title, description, input, expected_output
+            RETURNING 
+                id, title, description, input, expected_output
             """,
             *values,
             id

@@ -1,18 +1,19 @@
 from typing import Annotated
- 
+
 from fastapi import APIRouter, Body, Depends, Path, Query
- 
+
 from .schemas import (
-    DeleteProblemRequest,
     AddProblemsRequest,
     AddProblemsResponse,
+    DeleteProblemRequest,
     GetRandomProblemsRequest,
     GetRandomProblemsResponse,
-    ProblemResponse,
+    ProblemId,
     ProblemPatchRequest,
+    ProblemResponse,
 )
 from .service import ProblemService
- 
+
 router = APIRouter(tags=["Problems"])
  
  
@@ -37,7 +38,8 @@ async def add_problems(
         list_id=list_id,
         problems=problems,
     )
- 
+
+
 @router.get("/problems/random", response_model=GetRandomProblemsResponse)
 async def get_random_problems(
     params: Annotated[GetRandomProblemsRequest, Query()],
@@ -52,17 +54,19 @@ async def get_random_problems(
 
     # Instancia o schema de resposta a partir dos dados retornados pelo service.
     return GetRandomProblemsResponse(problems=problems)
-    
-@router.get("/problems/{problem_id}", response_model=ProblemResponse)
+
+
+@router.get("/problems/{id}", response_model=ProblemResponse)
 async def get_problem(
-    problem_id: Annotated[int, Path()],
+    id: ProblemId,
     service: Annotated[ProblemService, Depends()],
 ):
-    return await service.get_problem(problem_id)
- 
+    return await service.get_problem(id)
+
+
 @router.patch("/problems/{id}", response_model=ProblemResponse)
 async def patch_problem(
-    id: Annotated[int, Path()],
+    id: ProblemId,
     body : Annotated[ProblemPatchRequest, Body()],
     service : Annotated[ProblemService, Depends()],
 ):

@@ -14,12 +14,12 @@ Regras:
    de adivinhar.
 
 Orientações para a correção:
-1. A entrada é um bloco único.
-2. Sem texto excedente, não utilize `print()`, `input()`, ou qualquer elemento 
-que imprima um texto que destoe do que é a saída esperada.
-3. Para dados complexos — como listas, tuplas, dicionários, matrizes, entre outros —, 
-o ideal é importar a biblioteca `ast` nativa do Python e executar a função `ast.literal_eval()` 
-nessa respectiva entrada.
+1. A entrada é dada por linha, ou seja, cada linha corresponde a uma 
+entrada que deve ser capturada pela função `input()`.
+2. Para conversão da entrada em estruturas compostas — como listas, tuplas, 
+dicionários, matrizes, entre outros —, o ideal é importar a biblioteca `ast` 
+nativa do Python e executar a função `ast.literal_eval()` nessa respectiva 
+entrada.
  
 Formato: Responda APENAS com JSON válido. Proibido markdown (```), crases ou texto extra.
 {

@@ -1,11 +1,27 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, Depends, Path
+from fastapi import APIRouter, Body, Depends
 
-from .schemas import CreateListRequest, CreateListResponse, ListResponse, ListDetailResponse, ListPatchResponse, DeleteListsRequest
+from .schemas import (
+    CreateListRequest,
+    CreateListResponse,
+    DeleteListsRequest,
+    ListDetailResponse,
+    ListId,
+    ListPatchResponse,
+    ListResponse,
+)
 from .service import ListService
 
 router = APIRouter(tags=["Lists"])
+
+
+@router.get("/lists", response_model= list[ListResponse])
+async def get_lists(
+    service: Annotated[ListService, Depends()],
+):
+    return await service.get_all()
+
 
 @router.post("/lists", status_code=201, response_model=CreateListResponse,)
 async def create_list(
@@ -15,27 +31,22 @@ async def create_list(
     return await service.create(payload)
 
 
-@router.get("/lists", response_model= list[ListResponse])
-async def get_lists(
-    service: Annotated[ListService, Depends()],
-):
-    return await service.get_all()
-
-@router.get("/lists/{list_id}", response_model= ListDetailResponse)
+@router.get("/lists/{id}", response_model=ListDetailResponse)
 async def get_list(
-    list_id: Annotated[int, Path()],
+    id: ListId,
     service: Annotated[ListService, Depends()]
 ):
-    return await service.get_by_id(list_id)
+    return await service.get_by_id(id)
 
 
-@router.patch("/lists/{list_id}", response_model = ListResponse)
+@router.patch("/lists/{id}", response_model=ListResponse)
 async def patch_list(
-    list_id: Annotated[int, Path()],
+    id: ListId,
     body: Annotated[ListPatchResponse, Body()],
     service: Annotated[ListService, Depends()]
 ):
-    return await service.patch_list(list_id, body)
+    return await service.patch_list(id, body)
+
 
 @router.delete("/lists")
 async def delete_lists(

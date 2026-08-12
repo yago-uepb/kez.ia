@@ -4,9 +4,13 @@ from asyncpg import Connection
 from fastapi import Depends
 
 from src.shared.dependencies import get_connection
-from src.shared.exceptions import ConflictException, NotFoundException, ValidationException
+from src.shared.exceptions import (
+    ConflictException,
+    NotFoundException,
+    ValidationException,
+)
 
-from .schemas import CreateListRequest, CreateListResponse, ListResponse
+from .schemas import CreateListRequest, CreateListResponse
 
 
 class ListService:
@@ -46,6 +50,7 @@ class ListService:
             description=data.description,
             is_hidden=data.is_hidden
         )
+
     
     async def get_all(self):
         rows = await self.connection.fetch(
@@ -56,8 +61,9 @@ class ListService:
             """
         )
         return [dict(row) for row in rows]
+
     
-    async def get_by_id(self, list_id: int):
+    async def get_by_id(self, list_id):
         list_row = await self.connection.fetchrow(
             """
             SELECT id, name, description, is_hidden
@@ -82,6 +88,7 @@ class ListService:
             **dict(list_row),
             "problems": [dict(row) for row in problem_rows],
         }
+
 
     async def patch_list(self, list_id, payload):
         fields = payload.model_dump(exclude_unset=True)
@@ -114,50 +121,50 @@ class ListService:
             """, *values, list_id
         )
 
-        print("DEBUG row:", row)
         if row is None:
             raise NotFoundException(f"A lista {list_id} não foi encontrada.")
 
         return dict(row)
+
     
     async def delete_lists(self, ids):
-            async with self.connection.transaction():
-                # Guarda quais problemas estavam ligados a essas listas ANTES de apagar
-                problem_rows = await self.connection.fetch(
-                    """
-                    SELECT DISTINCT problem_id
-                    FROM list_problems
-                    WHERE list_id = ANY($1::int[])
-                    """, ids
-                )
-                problem_ids = [row["problem_id"] for row in problem_rows]
+        async with self.connection.transaction():
+            # Guarda quais problemas estavam ligados a essas listas ANTES de apagar
+            problem_rows = await self.connection.fetch(
+                """
+                SELECT DISTINCT problem_id
+                FROM list_problems
+                WHERE list_id = ANY($1::int[])
+                """, ids
+            )
+            problem_ids = [row["problem_id"] for row in problem_rows]
 
-                deleted_lists = await self.connection.fetch(
+            deleted_lists = await self.connection.fetch(
+                """
+                DELETE FROM lists
+                WHERE id = ANY($1::int[])
+                RETURNING id
+                """, ids
+            )
+
+            if not deleted_lists:
+                raise NotFoundException("Nenhuma das listas informadas foi encontrada.")
+
+            # Dos problemas que estavam nessas listas, apaga só quem ficou "órfão"
+            # (ou seja: não sobrou em list_problems em NENHUMA outra lista)
+            orphan_ids = []
+            if problem_ids:
+                orphan_rows = await self.connection.fetch(
                     """
-                    DELETE FROM lists
+                    DELETE FROM problems
                     WHERE id = ANY($1::int[])
+                    AND id NOT IN (SELECT problem_id FROM list_problems)
                     RETURNING id
-                    """, ids
+                    """, problem_ids
                 )
+                orphan_ids = [row["id"] for row in orphan_rows]
 
-                if not deleted_lists:
-                    raise NotFoundException("Nenhuma das listas informadas foi encontrada.")
-
-                # Dos problemas que estavam nessas listas, apaga só quem ficou "órfão"
-                # (ou seja: não sobrou em list_problems em NENHUMA outra lista)
-                orphan_ids = []
-                if problem_ids:
-                    orphan_rows = await self.connection.fetch(
-                        """
-                        DELETE FROM problems
-                        WHERE id = ANY($1::int[])
-                        AND id NOT IN (SELECT problem_id FROM list_problems)
-                        RETURNING id
-                        """, problem_ids
-                    )
-                    orphan_ids = [row["id"] for row in orphan_rows]
-
-            return {
-                "deleted_list_ids": [row["id"] for row in deleted_lists],
-                "deleted_problem_ids": orphan_ids,
-            }
+        return {
+            "deleted_list_ids": [row["id"] for row in deleted_lists],
+            "deleted_problem_ids": orphan_ids,
+        }

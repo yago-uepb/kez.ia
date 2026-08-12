@@ -1,5 +1,11 @@
+from typing import Annotated
+
+from fastapi import Path
 from pydantic import BaseModel, Field, field_validator
+
 from src.features.problems.schemas import ProblemResponse
+
+ListId = Annotated[int, Path(ge=1)]
 
 class CreateListRequest(BaseModel):
     name: str = Field(min_length=3, max_length=255)

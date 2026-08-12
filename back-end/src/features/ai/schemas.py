@@ -34,4 +34,3 @@ class QuestionWithTestCases(BaseModel):
 
 class SuggestTestCasesResponse(BaseModel):
     questions: list[QuestionWithTestCases] = Field(default_factory=list)
-
