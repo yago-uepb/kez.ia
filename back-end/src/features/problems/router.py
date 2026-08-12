@@ -52,7 +52,13 @@ async def get_random_problems(
 
     # Instancia o schema de resposta a partir dos dados retornados pelo service.
     return GetRandomProblemsResponse(problems=problems)
- 
+    
+@router.get("/problems/{problem_id}", response_model=ProblemResponse)
+async def get_problem(
+    problem_id: Annotated[int, Path()],
+    service: Annotated[ProblemService, Depends()],
+):
+    return await service.get_problem(problem_id)
  
 @router.patch("/problems/{id}", response_model=ProblemResponse)
 async def patch_problem(
