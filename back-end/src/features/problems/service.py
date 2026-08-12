@@ -1,43 +1,43 @@
 from typing import Annotated
-
+ 
 from asyncpg import Connection
 from fastapi import Depends
-
+ 
 from src.shared.dependencies import get_connection
 from src.shared.exceptions import NotFoundException, ValidationException
-
-
+ 
+ 
 class ProblemService:
-
+ 
     def __init__(
         self, 
         connection: Annotated[Connection, Depends(get_connection)]
     ):
         # Guarda a conexão recebida para acessar o banco.
         self.connection = connection
-
-
+ 
+ 
     async def _list_exists(self, list_id):
         # Verifica se a lista informada existe.
         row = await self.connection.fetchrow(
             "SELECT id FROM lists WHERE id = $1",
             list_id,
         )
-
+ 
         return row is not None
         
-
+ 
     async def add_problems_to_list(self, list_id, problems):
         # Cria os problemas e associa cada um à lista.
         async with self.connection.transaction():
-
+ 
             if not await self._list_exists(list_id):
                 raise NotFoundException(
                     f"A lista {list_id} não foi encontrada.",
                 )
-
+ 
             created_problems = []
-
+ 
             for problem in problems:
                 test_cases = problem.test_cases
                 
@@ -58,7 +58,7 @@ class ProblemService:
                     test_cases[0].input,
                     test_cases[0].expected_output,
                 )
-
+ 
                 # Associa o problema criado à lista.
                 await self.connection.execute(
                     """
@@ -70,13 +70,13 @@ class ProblemService:
                     list_id,
                     row["id"],
                 )
-
+ 
                 # Prepara todos os casos de teste, EXCLUINDO o primeiro já inserido
                 tuple_test_cases = [
                     (row["id"], case.input, case.expected_output) 
                     for case in test_cases[1:]
                 ]
-
+ 
                 # Insere tuple_test_cases em lote
                 await self.connection.executemany(
                     """
@@ -87,13 +87,13 @@ class ProblemService:
                     """,
                     tuple_test_cases
                 )
-
+ 
                 # Guarda o problema criado para retorná-lo.
                 created_problems.append(dict(row))
-
+ 
             return created_problems
-
-
+ 
+ 
     async def get_problem(self, id):
         row = await self.connection.fetchrow(
             """
@@ -102,24 +102,81 @@ class ProblemService:
             WHERE id = $1
             """, id
         )
-
+ 
         if row is None:
             raise NotFoundException(
                 f"O problema {id} não foi encontrado!",
             )
         
         return dict(row)
+ 
+ 
+    def _placeholders(self, values, params):
+        # Adiciona cada valor aos params e devolve os placeholders ($N) correspondentes,
+        # em vez de usar ANY($N::tipo[]) — o fallback SQLite só converte uma ocorrência
+        # de ANY() por consulta, então IN/NOT IN com placeholders é mais seguro aqui.
+        placeholders = []
+ 
+        for value in values:
+            params.append(value)
+            placeholders.append(f"${len(params)}")
+ 
+        return ", ".join(placeholders)
+ 
+ 
+    async def get_random_problems(self, list_id, excluded_problems_id, quantity):
+        # Monta os filtros dinamicamente, só incluindo o que foi informado.
+        conditions = []
+        params = []
+ 
+        if list_id:
+            list_id_placeholders = self._placeholders(list_id, params)
+            conditions.append(
+                f"""
+                id IN (
+                    SELECT problem_id FROM list_problems
+                    WHERE list_id IN ({list_id_placeholders})
+                )
+                """
+            )
+ 
+        if excluded_problems_id:
+            excluded_placeholders = self._placeholders(excluded_problems_id, params)
+            conditions.append(f"id NOT IN ({excluded_placeholders})")
+ 
+        where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+ 
+        params.append(quantity)
+ 
+        # ORDER BY RANDOM() já garante que os problemas retornados sejam distintos entre si.
+        problems = await self.connection.fetch(
+            f"""
+            SELECT id, title, description, input, expected_output
+            FROM problems
+            {where_clause}
+            ORDER BY RANDOM()
+            LIMIT ${len(params)}
+            """,
+            *params,
+        )
+ 
+        if not problems:
+            raise NotFoundException(
+                "Nenhum problema encontrado no domínio de listas delimitado",
+            )
+ 
+        return [dict(problem) for problem in problems]
     
-
+ 
     async def patch_problem(self, id, payload):
         fields = payload.model_dump(exclude_unset=True)
-
+ 
         if not fields:
             raise ValidationException("Nenhum campo para atualizar.")
-
+ 
         set_clause = ", ".join(f"{field} = ${i}" for i, field in enumerate(fields, start=1))
         values = list(fields.values())
-
+ 
         row = await self.connection.fetchrow(
             f"""
             UPDATE problems
@@ -130,15 +187,15 @@ class ProblemService:
             *values,
             id
         )
-
+ 
         if row is None:
             raise NotFoundException(
                 f"O Problema {id} não foi encontrado.",
             )
         
         return dict(row)
-
-
+ 
+ 
     async def delete_problems(self, ids):
         deleted_rows = await self.connection.fetch(
             """
@@ -148,7 +205,7 @@ class ProblemService:
             """,
             ids
         )
-
+ 
         if not deleted_rows:
             raise NotFoundException(
                 "Nenhum dos problemas informados foram encontrados."
