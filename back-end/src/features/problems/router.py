@@ -7,6 +7,7 @@ from .schemas import (
     AddProblemsRequest,
     AddProblemsResponse,
     GetRandomProblemsRequest,
+    GetRandomProblemsResponse,
     ProblemResponse,
     ProblemPatchRequest,
 )
@@ -37,26 +38,20 @@ async def add_problems(
         problems=problems,
     )
  
- 
-@router.get("/problems/random", response_model=list[ProblemResponse])
+@router.get("/problems/random", response_model=GetRandomProblemsResponse)
 async def get_random_problems(
     params: Annotated[GetRandomProblemsRequest, Query()],
     service: Annotated[ProblemService, Depends()],
 ):
     # Retorna vários problemas aleatórios e sem repetição, conforme os filtros informados.
-    return await service.get_random_problems(
-        params.list_id,
-        params.excluded_problems_id,
+    problems = await service.get_random_problems(
+        params.lists_ids,
+        params.excluded_problem_ids,
         params.quantity,
     )
- 
- 
-@router.get("/problems/{id}", response_model= ProblemResponse)
-async def get_problem(
-    id: Annotated[int, Path()],
-    service: Annotated[ProblemService, Depends()]
-):
-    return await service.get_problem(id)
+
+    # Instancia o schema de resposta a partir dos dados retornados pelo service.
+    return GetRandomProblemsResponse(problems=problems)
  
  
 @router.patch("/problems/{id}", response_model=ProblemResponse)

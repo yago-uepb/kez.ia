@@ -55,6 +55,9 @@ class DeleteProblemRequest(BaseModel):
  
  
 class GetRandomProblemsRequest(BaseModel):
-    list_id: list[PositiveInt] | None = Field(default=None)
-    excluded_problems_id: list[PositiveInt] | None = Field(default=None)
+    lists_ids: list[PositiveInt] | None = Field(default=None)
+    excluded_problem_ids: list[PositiveInt] | None = Field(default=None)
     quantity: int = Field(default=1, ge=1, le=30)
+
+class GetRandomProblemsResponse(BaseModel):
+    problems: list[ProblemResponse]
