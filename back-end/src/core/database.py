@@ -203,13 +203,16 @@ class SQLiteConnectionAdapter:
             args,
         )
 
-        rows = await cursor.fetchall()
+        try:
+            rows = await cursor.fetchall()
 
-        return [
-            dict(row)
-            for row in rows
-        ]
-
+            return [
+                dict(row)
+                for row in rows
+            ]
+        finally:
+            await cursor.close()
+            
 
     async def fetchrow(
         self,
@@ -226,10 +229,12 @@ class SQLiteConnectionAdapter:
             args,
         )
 
-        row = await cursor.fetchone()
-
-        return dict(row) if row else None
-
+        try:
+            row = await cursor.fetchone()
+            return dict(row) if row else None
+        finally:
+            await cursor.close()
+            
 
     async def fetchval(
         self,
@@ -249,17 +254,12 @@ class SQLiteConnectionAdapter:
 
     @asynccontextmanager
     async def transaction(self):
-        """
-        Simula o padrão:
-
-            async with connection.transaction():
-                ...
-        """
-
         is_outermost = self._transaction_depth == 0
+        started_transaction = False
 
-        if is_outermost:
+        if is_outermost and not self._conn.in_transaction:
             await self._conn.execute("BEGIN")
+            started_transaction = True
 
         self._transaction_depth += 1
 
@@ -268,13 +268,13 @@ class SQLiteConnectionAdapter:
 
             self._transaction_depth -= 1
 
-            if is_outermost:
+            if is_outermost and started_transaction:
                 await self._conn.commit()
 
         except Exception:
             self._transaction_depth -= 1
 
-            if is_outermost:
+            if is_outermost and started_transaction:
                 await self._conn.rollback()
 
             raise
