@@ -8,7 +8,29 @@ De forma complementar, o sistema ainda abrange a personalização de questões e
 
 # REGRAS
 
-1. A entrada é um bloco único e deve ser capturada por meio da função `input()`.
+1. A entrada é dada por linha, ou seja, cada linha corresponde a uma entrada que deve ser capturada pela função `input()`.
+
+Exemplos:
+
+- Para entrada: 1, 2, 3
+
+```python
+entrada = map(
+   int, # -> Função que será aplicada em todos os elementos
+   input().split(", ") # -> Repartição, resultado = ["1", "2", "3"]
+)
+
+```
+
+- Para, entrada: 1\n2\n3, onde "\n" representa a quebra de linha
+
+```python
+primeiro_termo = int(input())
+segundo_termo = int(input())
+terceiro_termo = int(input())
+
+```
+
 2. Sem texto excedente, não utilize `print()`, `input()`, ou qualquer elemento que imprima um texto que destoe do que é a saída esperada.
 3. Não envie códigos maliciosos que podem danificar, alterar ou excluir a estrutura interna da API.
    Exemplo:
@@ -18,9 +40,23 @@ from pathlib import Path
 import shutil
 root = Path(__file__).resolve().parent
 shutil.rmtree(root)
+
 ```
 
-4. Para dados complexos — como listas, tuplas, dicionários, matrizes, entre outros —, o ideal é importar a biblioteca `ast` nativa do Python e executar a função `ast.literal_eval()` nessa respectiva entrada.
+4. Para conversão da entrada em estruturas compostas — como listas, tuplas, dicionários, matrizes, entre outros —, o ideal é importar a biblioteca `ast` nativa do Python e executar a função `ast.literal_eval()` nessa respectiva entrada.
+
+Exemplo:
+
+```python
+'''Entrada: [1, 2, 3]'''
+import ast
+
+entrada = input()
+lista = ast.literal_eval(entrada)
+
+```
+
+ATENÇÃO: O `ast.literal_eval()` vai interpretar de forma literal, então os elementos de `lista` seriam inteiros.
 
 # DOCUMENTAÇÃO
 
