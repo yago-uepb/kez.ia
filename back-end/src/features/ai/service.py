@@ -49,6 +49,8 @@ class AIService:
 
 
     def build_user_prompt(self, problem_description, attempt, failed_case = None):
+        ''' Método responsável por criar o user_prompt para a revisão de código '''
+
         return json.dumps(
             {
                 "enunciado": problem_description,
@@ -67,6 +69,11 @@ class AIService:
 
 
     async def process_prompt(self, system_prompt, user_prompt, action):
+        ''' 
+        Método onde passa toda comunicação com 
+        a API da Groq (acesso aos modelos de IA) 
+        '''
+
         ai_model = self.MODELS[action]
 
         try:
@@ -93,6 +100,11 @@ class AIService:
 
 
     async def _extract_content(self, content, mime_type):
+        ''' 
+        Método privado que se comunica com o serviço 
+        de extração de conteúdo (por enquanto, só texto) 
+        '''
+
         extractor = self.content_extractor.EXTRACTORS.get(mime_type)
 
         if extractor is None:
@@ -140,6 +152,11 @@ class AIService:
 
     
     async def suggest_test_cases(self, data: SuggestTestCasesRequest):
+        ''' 
+        Sugestão de casos de teste a partir de 
+        um enunciado e uma descrição do problema 
+        '''
+
         questions_with_id = [
             {
                 "id": index, 

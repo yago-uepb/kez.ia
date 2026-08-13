@@ -55,13 +55,7 @@ class CodeExecutor:
 
 
     def is_code_safe(self, code):
-        """
-        Faz uma validação estática simples utilizando AST.
-
-        A ideia não é criar uma sandbox de segurança completa,
-        mas impedir o uso acidental/direto de módulos e funções
-        que não fazem parte do ambiente didático.
-        """
+        """ Faz uma validação estática simples utilizando AST. """
 
         try:
             tree = ast.parse(code)
@@ -75,14 +69,6 @@ class CodeExecutor:
 
         for node in ast.walk(tree):
 
-            # --------------------------------------------------
-            # import modulo
-            #
-            # Exemplo:
-            # import math
-            # import numpy
-            # import numpy.linalg
-            # --------------------------------------------------
             if isinstance(node, ast.Import):
 
                 for alias in node.names:
@@ -94,13 +80,6 @@ class CodeExecutor:
                     if module_name not in allowed_modules:
                         return False
 
-            # --------------------------------------------------
-            # from modulo import ...
-            #
-            # Exemplo:
-            # from math import sqrt
-            # from numpy import array
-            # --------------------------------------------------
             elif isinstance(node, ast.ImportFrom):
 
                 if node.module is None:
@@ -116,14 +95,6 @@ class CodeExecutor:
                 if module_name not in allowed_modules:
                     return False
 
-            # --------------------------------------------------
-            # Funções bloqueadas
-            #
-            # Exemplo:
-            # eval(...)
-            # exec(...)
-            # open(...)
-            # --------------------------------------------------
             elif (
                 isinstance(node, ast.Call) 
                 and isinstance(node.func, ast.Name) 
