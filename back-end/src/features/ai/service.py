@@ -122,7 +122,7 @@ class AIService:
 
         user_prompt = json.dumps(
             {"conteudo_documento": text}, 
-            ensure_ascii=False, 
+            ensure_ascii=False,
             indent=2
         )
 

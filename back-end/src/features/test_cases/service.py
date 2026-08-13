@@ -109,7 +109,7 @@ class TestCaseService:
                     SET 
                         {", ".join(updates)}
                     WHERE 
-                        id = ${len(updates)}
+                        id = ${len(values)}
                     RETURNING 
                         id, input, expected_output
                     """, *values

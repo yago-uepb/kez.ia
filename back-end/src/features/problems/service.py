@@ -113,9 +113,7 @@ class ProblemService:
  
  
     def _placeholders(self, values, params):
-        # Adiciona cada valor aos params e devolve os placeholders ($N) correspondentes,
-        # em vez de usar ANY($N::tipo[]) — o fallback SQLite só converte uma ocorrência
-        # de ANY() por consulta, então IN/NOT IN com placeholders é mais seguro aqui.
+        # Adiciona cada valor aos params e devolve os placeholders ($N) correspondentes
         placeholders = []
  
         for value in values:
@@ -125,24 +123,24 @@ class ProblemService:
         return ", ".join(placeholders)
  
  
-    async def get_random_problems(self, list_id, excluded_problems_id, quantity):
+    async def get_random_problems(self, lists_ids, excluded_problem_ids, quantity):
         # Monta os filtros dinamicamente, só incluindo o que foi informado.
         conditions = []
         params = []
  
-        if list_id:
-            list_id_placeholders = self._placeholders(list_id, params)
+        if lists_ids:
+            lists_ids_placeholders = self._placeholders(lists_ids, params)
             conditions.append(
                 f"""
                 id IN (
                     SELECT problem_id FROM list_problems
-                    WHERE list_id IN ({list_id_placeholders})
+                    WHERE list_id IN ({lists_ids_placeholders})
                 )
                 """
             )
  
-        if excluded_problems_id:
-            excluded_placeholders = self._placeholders(excluded_problems_id, params)
+        if excluded_problem_ids:
+            excluded_placeholders = self._placeholders(excluded_problem_ids, params)
             conditions.append(f"id NOT IN ({excluded_placeholders})")
  
         where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""

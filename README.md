@@ -66,7 +66,7 @@ ATENÇÃO: O `ast.literal_eval()` vai interpretar de forma literal, então os el
 
 - [Esquema Conceitual no Modelo ER](https://www.tldraw.com/f/94jtl8YQs_fM2HmvgNE35?d=v150.98.1276.695.page)
 
-- [Script db-fiddle](https://www.db-fiddle.com/f/joFuH6axFgMFwQuG2RusQL/2)
+- [Script db-fiddle](https://www.db-fiddle.com/f/joFuH6axFgMFwQuG2RusQL/4)
 
 ## Fluxos da Aplicação
 
